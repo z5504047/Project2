@@ -11,7 +11,6 @@
 #   – pandas.Series.prod
 #   – pandas.Series.resample
 #   - ......
-#   - ......
 # Hint: you can utilize modules covered in our lectures, listed above and any others.
 # ----------------------------------------------------------------------------
 
@@ -24,15 +23,15 @@
 #
 # <COMPLETE THIS PART>
 import config as cfg
-import util
-
+import util as util
 
 # We've imported other needed scripts and defined aliases. Please keep using the same aliases for them in this project.
-import zid_project2_etl as etl
-import zid_project2_characteristics as cha
-import zid_project2_portfolio as pf
+from project2 import zid_project2_etl as etl
+from project2 import zid_project2_characteristics as cha
+from project2 import zid_project2_portfolio as pf
+
 import pandas as pd
-import numpy as np
+
 
 # -----------------------------------------------------------------------------------------------
 # Part 3: Follow the workflow in portfolio_main function
@@ -170,28 +169,26 @@ def get_avg(df: pd.DataFrame, year):
 
     """
     # <COMPLETE THIS PART>
-    # Filter the data for the specified year
-    df_year = df[df.index.year == year]
-    # Calculate the mean
-    df_mean = df_year.mean()
-    return df_mean
+
 
 def get_cumulative_ret(df):
     """ Returns cumulative returns for input DataFrame.
 
     Given a df with return series, this function will return the
-    buy and hold return for the whole period.
+    buy-and-hold return over the entire period.
 
     Parameters
     ----------
     df : DataFrame
         A Pandas DataFrame containing monthly portfolio returns
         with a PeriodIndex index.
+        - df.columns: portfolio names
 
     Returns
     -------
-    df
-        A df with the cumulative returns for portfolios, ignoring missing observations.
+    ser : Series
+        A series containing portfolios' buy-and-hold return over the entire period.
+        - ser.index: portfolio names
 
     Notes
     -----
@@ -202,9 +199,7 @@ def get_cumulative_ret(df):
 
     """
     # <COMPLETE THIS PART>
-    # Calculate cumulative returns
-    cumulative_ret = (1 + df).prod() - 1
-    return cumulative_ret
+
 
 # ----------------------------------------------------------------------------
 # Part 8: Answer questions
@@ -236,64 +231,28 @@ def get_cumulative_ret(df):
 #
 #     To answer the questions below, you need to run portfolio_main function in this script
 #     with the following parameter values:
-# tickers: all tickers included in the dictionary config.TICMAP
-# start: '2000-12-29'
-# end: '2021-08-31'
-# cha_name: 'vol'
-# ret_freq_use: ['Daily',]
-# q: 3
-tickers = cfg.TICKERS
-start = '2000-12-29'
-end = '2021-08-31'
-cha_name = 'vol'
-ret_freq_use = ['Daily',]
-q = 3
-dict_ret, df_cha, df_portfolios = portfolio_main(tickers, start, end, cha_name, ret_freq_use, q)
-DM_Ret_dict = dict_ret
-Vol_Ret_mrg_df = df_cha
-for key, df in DM_Ret_dict.items():
-    df.to_csv(f"{key}_Ret_dict.csv")
-Vol_Ret_mrg_df.to_csv('Vol_Ret_mrg_df.csv')
-EW_LS_pf_df = df_portfolios
-EW_LS_pf_df.to_csv('EW_LS_pf_df.csv')
-# Vol_Ret_mrg_df.to_csv('Vol_Ret_mrg_df.csv')
+#     tickers: all tickers included in the dictionary config.TICMAP,
+#     start: '2000-12-29',
+#     end: '2021-08-31',
+#     cha_name: 'vol'.
+#     ret_freq_use: ['Daily',],
+#     q: 3
 #     Please name the three output files as DM_Ret_dict, Vol_Ret_mrg_df, EW_LS_pf_df.
 #     You can utilize the three output files and auxiliary functions to answer the questions.
-# DM_Ret_dict, Vol_Ret_mrg_df, EW_LS_pf_df = portfolio_main(tickers, start, end, cha_name, ret_freq_use, q)
-# Save the DataFrame in the dictionary
 
 
-
-# Vol_Ret_mrg_df.to_csv("Vol_Ret_mrg_df.csv")
-
-'''
-# Pending confirmation section
-tickers = list(cfg.TICMAP.values())
-start = '2000-12-29'
-end = '2021-08-31'
-cha_name = 'vol'
-ret_freq_use = ['Daily']
-q = 3
-DM_Ret_dict, Vol_Ret_mrg_df, EW_LS_pf_df = portfolio_main(tickers, start, end, cha_name, ret_freq_use, q)
-print(EW_LS_pf_df)
-'''
 # Q1: Which stock in your sample has the lowest average daily return for the
 #     year 2008 (ignoring missing values)? Your answer should include the
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q1_ANSWER = 'nvda'
-ret_df = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Daily"])
-avg_returns_2008 = get_avg(ret_df, year=2008)
-# Example process to find the stock with the lowest average daily return
-min_avg_return = avg_returns_2008.min()
-min_avg_return_stock = avg_returns_2008.idxmin()
-print(f"The stock with th lowest average daily yield in 2208 is {min_avg_return_stock}，The average rate of return is {min_avg_return:.4f}。")
+Q1_ANSWER = '?'
+
 
 # Q2: What is the daily average return of the stock in question 1 for the year 2008.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q2_ANSWER = '-0.0042'
+Q2_ANSWER = '?'
 
 
 # Q3: Which stock in your sample has the highest average monthly return for the
@@ -301,49 +260,26 @@ Q2_ANSWER = '-0.0042'
 #     ticker for this stock.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q3_ANSWER = 'aapl'
-ret_df_monthly = pd.DataFrame(etl.aj_ret_dict(cfg.TICMAP, '2000-12-29', '2021-08-31')["Monthly"])
-avg_returns_2019 = get_avg(ret_df_monthly, year=2019)
-# Find stocks with the highest average monthly yield and their yields
-max_avg_return = avg_returns_2019.max()
-max_avg_return_stock = avg_returns_2019.idxmax()
-# print(f"The stock with the higest average monthly returns in 2019 is {max_avg_return_stock}，The average tield is {max_avg_return:.4f}。")
+Q3_ANSWER = '?'
+
 
 # Q4: What is the average monthly return of the stock in question 3 for the year 2019.
 #     Use the output dictionary, DM_Ret_dict, and auxiliary function in this script
 #     to do the calculation.
-Q4_ANSWER = '0.0566'
+Q4_ANSWER = '?'
 
 
 # Q5: What is the average monthly total volatility for stock 'TSLA' in the year 2010?
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
-Q5_ANSWER = '0.0416'
-# Get TSLA daily yield data for 2010
-ret_dict = etl.aj_ret_dict(['TSLA'], '2010-01-01', '2010-12-31')
-# Calculate TSLA's monthly volatility using the vol_cal function
-tsla_vol_df = cha.vol_cal(ret_dict, 'vol', ['Daily'])
-# Calculate the average monthly total volatility of TSLA in 2010
-tsla_avg_monthly_volatility = tsla_vol_df['tsla_vol'].mean()
-# print(f"The average monthly total volatility of TSLA in 2010 is: {tsla_avg_monthly_volatility:.4f}")
+Q5_ANSWER = '?'
+
 
 # Q6: What is the ratio of the average monthly total volatility for stock 'V'
 #     in the year 2008 to that in the year 2018? Keep 1 decimal places.
 #     Use the output dataframe, Vol_Ret_mrg_df, and auxiliary function in this script
 #     to do the calculation.
-Q6_ANSWER = '0.4'
-# Obtain the daily return data for 'V'
-ret_dict_2008 = etl.aj_ret_dict(['V'], '2008-01-01', '2008-12-31')
-ret_dict_2018 = etl.aj_ret_dict(['V'], '2018-01-01', '2018-12-31')
-# Calculate 'V's monthly volatility in 2008 and 2018 using the vol_cal function
-v_vol_df_2008 = cha.vol_cal(ret_dict_2008, 'vol', ['Daily'])
-v_vol_df_2018 = cha.vol_cal(ret_dict_2018, 'vol', ['Daily'])
-# Calculate the average monthly total volatility for 2008 and 2018
-v_avg_monthly_volatility_2008 = v_vol_df_2008['v_vol'].mean()
-v_avg_monthly_volatility_2018 = v_vol_df_2018['v_vol'].mean()
-# Calculate the ratio, rounded to 1 decimal place
-volatility_ratio = round(v_avg_monthly_volatility_2018 / v_avg_monthly_volatility_2008, 1)
-# print(f"The ratio of the average monthly total volatility of 'V' stock in 2008 to 2018 is: {volatility_ratio}")
+Q6_ANSWER = '?'
 
 
 # Q7: How many effective year-month for stock 'TSLA' in year 2010. An effective year-month
@@ -351,60 +287,29 @@ volatility_ratio = round(v_avg_monthly_volatility_2018 / v_avg_monthly_volatilit
 #     are not null.
 #     Use the output dataframe, Vol_Ret_mrg_df, to do the calculation.
 #     Answer should be an integer
-Q7_ANSWER = '5'
-# Obtain the daily returns and monthly returns data for 'TSLA' stock
-ret_dict = etl.aj_ret_dict(['TSLA'], '2010-01-01', '2010-12-31')
-# Calculate TSLA's monthly volatility using the vol_cal function
-tsla_vol_df = cha.vol_cal(ret_dict, 'vol', ['Daily'])
-tsla_monthly_ret_df = ret_dict['Monthly']
-tsla_vol_df.columns = ['tsla_vol']
-# Merge the monthly returns and volatility DataFrame
-Vol_Ret_mrg_df = pd.merge(tsla_monthly_ret_df, tsla_vol_df, left_index=True, right_index=True)
-# Filter the data for 2010
-Vol_Ret_mrg_df_2010 = Vol_Ret_mrg_df.loc['2010']
-# Calculate the number of valid months
-effective_months_2010 = Vol_Ret_mrg_df_2010.dropna().shape[0]
-# print(f"The number of valid months for TSLA in 2010 is: {effective_months_2010}")
-
+Q7_ANSWER = '?'
 
 
 # Q8: How many rows and columns in the EW_LS_pf_df data frame?
-#     Answer should be two integer, the first represent number of rows and the two numbers need to be
-#     separated by a comma.
-Q8_ANSWER = '235,4'
-# # Obtain the daily and monthly return data for all stocks
-# dict_ret = etl.aj_ret_dict(tickers=cfg.TICMAP, start='2000-12-29', end='2021-08-31')
-# # Calculate the volatility of the stocks
-# df_cha = cha.cha_main(dict_ret, cha_name='vol', ret_freq_use=['Daily',])
-# Construct an equal-weight long-short portfolio
-# df_portfolios = pf.pf_main(df_cha, cha_name='vol', q=3)
-# EW_LS_pf_df = df_portfolios
-rows, cols = EW_LS_pf_df.shape
-# print(f"EW_LS_pf_df The DataFrame has {rows} rows and {cols} columns.")
+#     The answer string should only include two integers separating by a comma.
+#     The first number represents number of rows.
+#     Don't include any other signs or letters.
+Q8_ANSWER = '?'
 
 
 # Q9: What is the average equal weighted portfolio return of the quantile with the
 #     lowest total volatility for the year 2019?
 #     Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-Q9_ANSWER = '0.0195'
-# Filter the data for 2019
-ew_ls_2019_df = EW_LS_pf_df.loc['2019']
-lowest_volatility_column = 'ewp_rank_1'
-# Calculate the average equal-weighted portfolio return for the lowest volatility quantile in 2019
-avg_return_lowest_volatility_2019 = ew_ls_2019_df[lowest_volatility_column].mean()
-# print(f"The average equal-weighted portfolio return for the lowest total volatility quantile in 2019 is: {avg_return_lowest_volatility_2019:.4f}")
+Q9_ANSWER = '?'
+
 
 # Q10: What is the cumulative portfolio return of the total volatility long-short portfolio
 #      over the whole sample period?
 #      Use the output dataframe, EW_LS_pf_d, and auxiliary function in this script
 #     to do the calculation.
-Q10_ANSWER = '1.3517'
-# Calculate the cumulative return of the long-short portfolio over the entire sample period
-cumulative_return_ls = get_cumulative_ret(EW_LS_pf_df['ls'])
-cumulative_return_ls = cumulative_return_ls.round(4)
-# print(f"The cumulative return of the total volatility long-short portfolio over the entire sample period is: {cumulative_return_ls:.4f}")
-# print(f'the answer is {cumulative_return_ls}')
+Q10_ANSWER = '?'
+
 
 # ----------------------------------------------------------------------------
 # Part 9: Add t_stat function
@@ -413,11 +318,12 @@ cumulative_return_ls = cumulative_return_ls.round(4)
 # in 'ls' column from Part 8.
 
 # Please add an auxiliary function called ‘t_stat’ below.
-# You can design the function's parameters and output table.
-# But make sure it can be used to output a DataFrame including three columns:
-# 1.ls_bar, the mean of 'ls' columns in EW_LS_pf_df
-# 2.ls_t, the t stat of 'ls' columns in EW_LS_pf_df
-# 3.n_obs, the number of observations of 'ls' columns in EW_LS_pf_df
+# You can design the function.
+# But make sure that when function get called, t_stat(EW_LS_pf_df),
+# the output is a DataFrame with one row called 'ls' and three columns below:
+#  1.ls_bar, the mean of 'ls' columns in EW_LS_pf_df, keep 4 decimal points
+#  2.ls_t, the t stat of 'ls' columns in EW_LS_pf_df, keep 4 decimal points
+#  3.n_obs, the number of observations of 'ls' columns in EW_LS_pf_df, save as integer
 
 # Notes:
 # Please add the function in zid_project2_main.py.
@@ -425,34 +331,12 @@ cumulative_return_ls = cumulative_return_ls.round(4)
 # Please replace the '?' of ls_bar, ls_t and n_obs variables below
 # with the respective values of the 'ls' column in EW_LS_pf_df from Part 8,
 # keep 4 decimal places if it is not an integer:
-ls_bar = '0.0067'
-ls_t = '1.3101'
-n_obs = '235'
-
-# ls_bar = '0.0073'
-# ls_t = '1.3847'
-# n_obs = '235'
+ls_bar = '?'
+ls_t = '?'
+n_obs = '?'
 
 
 # <ADD THE t_stat FUNCTION HERE>
-ls_bar = EW_LS_pf_df['ls'].mean()
-print(ls_bar)
-
-# Calculate the mean of the 'ls' column
-ls_bar = EW_LS_pf_df['ls'].mean()
-# Calculate the standard deviation of the 'ls' column
-ls_std = EW_LS_pf_df['ls'].std()
-# Calculate the sample size of the 'ls' column
-n = len(EW_LS_pf_df['ls'].dropna())
-# Calculate the standard error
-se = ls_std / np.sqrt(n)
-# Calculate the t-statistic
-ls_t = ls_bar / se
-print(ls_t)
-
-# Count after removing NA values
-n_obs = EW_LS_pf_df['ls'].dropna().count()
-print(n_obs)
 
 
 # ----------------------------------------------------------------------------
@@ -494,13 +378,17 @@ git_log = """?"""
 # 5.	Is there any further work you would like to pursue based on Project 2?
 #       Share your to-do list.
 #
-# For this mini-presentation, it is up to the group to decide whether all the members
-# are in the presentation video or not.
-# Please use Zoom to record it. The final submission should be a zoom recording link.
+# For this mini-presentation, the group can decide whether all members should appear in the presentation video.
+# You can use websites like YouTube or Zoom to record and share your videos with us,
+# or share your videos via OneDrive.
+# Please **AVOID** using VooV, QQ, and WeChat to share videos,
+# as we have faced access issues with these platforms previously.
 
-# Please replace the '?' with your team's presentation video zoom link:
-Presentation_zoom_link = '?'
-Password_of_your_video = '?'
+# Please replace the """?""" with your team's presentation video link.
+# If you have set a password, please replace the """?""" with the actual password to ensure accessibility,
+# or leave the Presentation_Password variable as it is.
+Presentation_link = """?"""
+Presentation_Password = """?"""
 
 
 def _test_get_avg():
@@ -528,18 +416,7 @@ def _test_get_avg():
 
 
 def _test_get_cumulative_ret():
-    """ Test function for `get_ann_ret`
-
-    To construct this example, suppose first that holding the stock for 400
-    trading days gives a total return of 1.5 (so 50% over 400 trading days).
-
-    The annualised return will then be:
-
-        (tot_ret)**(252/N) - 1 = 1.5 ** (252/400) - 1 = 0.2910
-
-    Create an example data frame with 400 copies of the daily yield, where
-
-        daily yield = 1.5 ** (1/400) - 1
+    """ `Test function for `get_cumulative_ret`
 
     """
     # Made-up data
@@ -563,3 +440,9 @@ def _test_get_cumulative_ret():
 
 if __name__ == "__main__":
     pass
+
+
+
+
+
+
