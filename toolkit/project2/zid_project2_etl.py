@@ -200,7 +200,7 @@ def daily_return_cal(prc):
     # <COMPLETE THIS PART>
     daily_returns = prc.pct_change()     # daily return
     daily_returns = daily_returns.dropna()  # del Null
-    daily_returns.name = prc.name  # same return
+    daily_returns.name = prc.name  # same return avoid mismatch
     return daily_returns
 
 # ----------------------------------------------------------------------------
@@ -424,13 +424,13 @@ def aj_ret_dict(tickers, start, end):
         ----------------------------------------
     """
     # <COMPLETE THIS PART>
-    price_data = {ticker.lower(): read_prc_csv(ticker, start, end) for ticker in tickers}  # all in once
+    price_data = {ticker.lower(): read_prc_csv(ticker, start, end) for ticker in tickers}  # one time loading
     daily_returns_dict = {ticker: daily_return_cal(price_data[ticker]) for ticker in price_data}  # daily return
     monthly_returns_dict = {ticker: monthly_return_cal(price_data[ticker]) for ticker in price_data}  # monthly return
 
     ret_dict = {
         "Daily": pd.DataFrame(daily_returns_dict),
-        "Monthly": pd.DataFrame(monthly_returns_dict)
+        "Monthly": pd.DataFrame(monthly_returns_dict)  # build dict for day and year
     }
 
     return ret_dict
