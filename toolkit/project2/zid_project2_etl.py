@@ -424,7 +424,16 @@ def aj_ret_dict(tickers, start, end):
         ----------------------------------------
     """
     # <COMPLETE THIS PART>
+    price_data = {ticker.lower(): read_prc_csv(ticker, start, end) for ticker in tickers}  # all in once
+    daily_returns_dict = {ticker: daily_return_cal(price_data[ticker]) for ticker in price_data}  # daily return
+    monthly_returns_dict = {ticker: monthly_return_cal(price_data[ticker]) for ticker in price_data}  # monthly return
 
+    ret_dict = {
+        "Daily": pd.DataFrame(daily_returns_dict),
+        "Monthly": pd.DataFrame(monthly_returns_dict)
+    }
+
+    return ret_dict
 
 # ----------------------------------------------------------------------------
 #   Test functions
