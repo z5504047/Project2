@@ -13,7 +13,7 @@
 import config as cfg
 import util
 import pandas as pd
-import os
+from pathlib import Path
 
 
 # ----------------------------------------------------------------------------
