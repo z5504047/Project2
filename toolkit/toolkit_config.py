@@ -1,4 +1,4 @@
 import os
 
-PRJDIR = r'F:\PycharmProjects\toolkit'
+PRJDIR = '/Users/zhangxu/PycharmProjects/pythonProject2/toolkit/'
 DATADIR = os.path.join(PRJDIR, 'data')
