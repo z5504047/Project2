@@ -478,17 +478,24 @@ print(n_obs)
 # .......
 #
 # Please replace the """?""" with your team's project 2 git log:
-git_log = """61efd02	z5504047XuZhang	Thu Aug 1 15:27:05 2024 +1000	Add files via upload
-d04c35c	z5504047XuZhang	Thu Aug 1 15:22:21 2024 +1000	Delete toolkit directory
-20f8a00	z5504047XuZhang	Thu Aug 1 15:16:18 2024 +1000	Add files via upload
-47acfae	z5504047XuZhang	Thu Aug 1 15:14:09 2024 +1000	Delete toolkit directory
-8546af1	z5504047XuZhang	Thu Aug 1 15:08:56 2024 +1000	Add files via upload
-ba96552	z5504047XuZhang	Thu Aug 1 15:07:13 2024 +1000	Delete toolkit directory
-35af56c	z5504047	Thu Aug 1 13:59:42 2024 +1000	Add files via upload
-d3aef0d	z5504047	Thu Aug 1 13:33:01 2024 +1000	Delete toolkit directory
-472afe1	z5504047	Wed Jul 24 18:23:59 2024 +1000	Delete tooklit/project2 directory
-c7254dd	z5504047	Wed Jul 24 18:22:53 2024 +1000	Add files via upload
-3f5146c	z550447	Wed Jul 24 13:08:08 2024 +1000	Initial commit"""
+git_log = """0c0cc86	z5504047XuZhang	Thu Aug 1 20:47:34 2024 +1000	Delete toolkit/project2/toolkit_config.py
+1e868a8	z5456663ZiqianZhang	Thu Aug 1 20:31:36 2024 +1000	Delete zid_project2_characteristics.py
+300c5f8	z5456663ZiqianZhang	Thu Aug 1 20:31:12 2024 +1000	Add files via upload
+2d35794	z5456663ZiqianZhang	Thu Aug 1 20:28:36 2024 +1000	Add files via upload
+69466e5	z5402127GuoyiDeng	Thu Aug 1 18:10:24 2024 +1000	Add files via upload
+27b27bb	z5402127GuoyiDeng	Thu Aug 1 17:02:29 2024 +1000	Add files via upload
+914f6d9	z5504047XuZhang	Thu Aug 1 16:50:32 2024 +1000	Update toolkit_config.py
+d1e2c83	z5504047XuZhang	Thu Aug 1 16:46:17 2024 +1000	Update zid_project2_main.py
+284d990	z5402127GuoyiDeng	Thu Aug 1 16:09:26 2024 +1000	Add files via upload
+2396ef4	z5402127GuoyiDeng	Thu Aug 1 16:06:29 2024 +1000	Add files via upload
+6440023	z5504047XuZhang	Thu Aug 1 16:03:56 2024 +1000	Update zid_project2_main.py
+eb64437	z5402127GuoyiDeng	Thu Aug 1 16:03:01 2024 +1000	Add files via upload
+7afb526	z5402127GuoyiDeng	Thu Aug 1 16:02:01 2024 +1000	Add files via upload
+477d527	z5402127GuoyiDeng	Thu Aug 1 15:57:52 2024 +1000	Delete project2 directory
+338a269	z5402127GuoyiDeng	Thu Aug 1 15:56:30 2024 +1000	Add files via upload
+adb9f88	z5402127GuoyiDeng	Thu Aug 1 15:53:44 2024 +1000	Add files via upload
+083fe79	z5402127GuoyiDeng	Thu Aug 1 15:49:15 2024 +1000	Add files via upload
+d25241d	z5402127GuoyiDeng	Thu Aug 1 15:05:15 2024 +1000	Add files via upload"""
 
 # ----------------------------------------------------------------------------
 # Part 11: project 2 mini-presentation
