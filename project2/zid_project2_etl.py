@@ -10,7 +10,10 @@
 #       For details, review the import statements in zid_project2_main.py
 
 # <COMPLETE THIS PART>
-
+import config as cfg
+import util
+import pandas as pd
+import os
 
 
 # ----------------------------------------------------------------------------
@@ -99,6 +102,14 @@ def read_prc_csv(tic, start, end, prc_col='Adj Close'):
     """
 
     # <COMPLETE THIS PART>
+    tic = tic.lower()  # lowercase
+    pth = Path(cfg.DATADIR) / f'{tic}_prc.csv'  # pathlib
+    df = pd.read_csv(pth)
+    df['Date'] = pd.to_datetime(df['Date'])  # Convert to datetime format
+    df.set_index('Date', inplace=True)  # Set the 'Date' column as the DataFrame index and sort it
+    df.sort_index(inplace=True)
+    ser = df.loc[start:end, prc_col].dropna().rename(tic)  # select the data within the specified date
+    return ser
 
 
 # ----------------------------------------------------------------------------
@@ -187,7 +198,10 @@ def daily_return_cal(prc):
 
     """
     # <COMPLETE THIS PART>
-
+    daily_returns = prc.pct_change()     # daily return
+    daily_returns = daily_returns.dropna()  # del Null
+    daily_returns.name = prc.name  # same return
+    return daily_returns
 
 # ----------------------------------------------------------------------------
 # Part 4.4: Complete the monthly_return_cal function
@@ -290,7 +304,14 @@ def monthly_return_cal(prc):
 
     """
     # <COMPLETE THIS PART>
-
+    monthly_counts = prc.resample('M').count()  # monthly number of trade
+    monthly_prc = prc.resample('M').last()   # price of the last day in month
+    valid_monthly_prc = monthly_prc[monthly_counts >= 18]  # >18 days month
+    monthly_returns = valid_monthly_prc.pct_change().dropna()  # return of the month
+    monthly_returns.index = monthly_returns.index.to_period('M')  # periodindex
+    monthly_returns.index.name = 'Year_Month'
+    monthly_returns.name = prc.name
+    return monthly_returns
 
 # ----------------------------------------------------------------------------
 # Part 4.5: Complete the aj_ret_dict function
