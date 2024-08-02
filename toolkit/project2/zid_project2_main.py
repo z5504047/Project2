@@ -516,8 +516,8 @@ d25241d	z5402127GuoyiDeng	Thu Aug 1 15:05:15 2024 +1000	Add files via upload"""
 # Please use Zoom to record it. The final submission should be a zoom recording link.
 
 # Please replace the '?' with your team's presentation video zoom link:
-Presentation_zoom_link = '?'
-Password_of_your_video = '?'
+Presentation_zoom_link = 'https://unsw-my.sharepoint.com/:v:/g/personal/z5504047_ad_unsw_edu_au/EaPrllkzlYVBsiXMr42N0a4Bj3pKcpXLxUEt0xlX9NOWVw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=Rk8kvF'
+Password_of_your_video = 'No password'
 
 
 def _test_get_avg():
